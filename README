@@ -1,0 +1,30 @@
+Nuestra implementación cuenta con:
+- Dos archivos de fuentes principales, uno que provee el sistema que ejecuta el cliente y otro que ejecuta el servidor.
+- Comunicación entre cliente y servidor vía sockets usando el protocolo TCP/IP y el puerto 50007.
+- Programación orientada a objetos.
+- Al rededor de una 900 lineas de código escritas completamente en python.
+Como se ha comentado en un reporte anterior en donde se definió las funcionalidades con las que debe contar este programa cliente servidor, actual mente contamos con:
+
+1) El servidor contiene:
+- Un sistema para obtener la lista de entradas que debe calcular (getProcessList).
+- Un método para extraer la energía final que se ha obtenido en un calculo dado (extractEnergyInformation).
+- Un ejecutor de los cálculos que el cliente ha solicitado(runConsecutiveGamessProcess).
+- Un escritor del log que contiene la superficie de potencial asociada al subespacio de la rejilla que se le haya asignado calcular (logGenerator).
+- Un controlador general que es capaz de comunicarse con la maquina cliente (calculosServer).
+2) El cliente contiene:
+- Un sistema para la creación de rejillas espaciales multidimensionales (Grid).
+- Un generador de las estructuras geométricas que se evaluaran (GamessGrid).
+- Un constructor de entradas con las geometrías para evaluar con el programa GAMESS (InputsConstructor).
+- Un sistema kernel, que controla las acciones realizadas sobre el paquete de cálculos que se le asigna a una maquina servidor (KernelParallel).
+- Un controlador principal encargado de subir, bajar y colocar en ejecución los diferentes paquetes de cálculos en diferentes servidores ( Client_GamessProcess).
+
+Una de las preocupaciones percibidas por el desarrollador sobre la propuesta inicial del programa era no tener una funcionalidad para reactivar la construcción de la rejilla si el programa cliente finaliza sin terminar la construccion de la rejilla, en la actualidad aun no se cuenta con dicha funcionalidad, sin embargo si se previsto para un futuro (si se llega a necesitar) la implementación de un método en una de las capas intermedias del programa capaz de leer los archivos log que genera el programa y de esta manera retomar los cálculos sin necesidad perder tiempo en calcular lo calculado.
+
+Los requerimientos que se necesitan para ejecutar efectivamente el programa son:
+- Tener instalado el interprete de python 2.6 o una versión posterior.
+- Contar con los paquetes de python:  socket, os, time, sys, numpy, re.
+- Contar con el protocolo ssh instalado tanto en la maquina cliente como en el servidor.
+- Tener configurada la red para acceder usando el protocolo ssh sin restricciones de autentificación entre las maquinas.
+- Permitir el acceso a las maquinas servidoras mediante el puerto 50007, (si no esta disponible se debe mirar las reglas del cortafuegos que exista en los servidores).
+- Haber instalado el programa de estructura electrónica regular GAMESS.
+- Poseer un comando en la consola cuyo nombre debe ser pysingle_gamess.py que ejecute los cálculos en GAMESS y archive las salidas de programa en el mismo directorio donde se encuentra la entrada (en las fuentes del este programa, tambien se distribuye una versión del script que realiza esta tarea, para el caso concreto de la sala de computo del Grupo de Química Teórica de la Universidad Nacional de Colombia).
